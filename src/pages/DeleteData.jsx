@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, '') || '';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+import { supabase } from '../supabase';
 
 function DeleteData() {
   const [email, setEmail] = useState('');
@@ -19,7 +17,7 @@ function DeleteData() {
     setMessage({ text, isError, hidden: false });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!confirmar) return;
 
@@ -30,43 +28,41 @@ function DeleteData() {
       return;
     }
 
-    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
       showMessage('Configuration error: missing Supabase URL or key. Please contact support.', true);
       return;
     }
 
-    const url = `${SUPABASE_URL}/functions/v1/delete-user-data`;
     setLoading(true);
     setMessage(prev => ({ ...prev, hidden: true }));
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      },
-      body: JSON.stringify({ email: emailTrim, confirmEmail: confirmEmailTrim }),
-    })
-      .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
-      .then((result) => {
-        setLoading(false);
-        if (result.ok && result.data?.success) {
-          showMessage(result.data.message || 'Your data has been deleted.', false);
-          setEmail('');
-          setConfirmEmail('');
-          setConfirmar(false);
-        } else {
-          showMessage(
-            result.data?.error || 'Something went wrong. Please try again or contact support.',
-            true
-          );
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-        const msg = 'Network error. Try again or contact support.'
-        showMessage(msg, true);
+    try {
+      const { data, error } = await supabase.functions.invoke('delete-user-data', {
+        body: { email: emailTrim, confirmEmail: confirmEmailTrim },
       });
+
+      setLoading(false);
+
+      if (error) {
+        showMessage(error.message || 'Network error. Try again or contact support.', true);
+        return;
+      }
+
+      if (data?.success) {
+        showMessage(data.message || 'Your data has been deleted.', false);
+        setEmail('');
+        setConfirmEmail('');
+        setConfirmar(false);
+      } else {
+        showMessage(
+          data?.error || 'Something went wrong. Please try again or contact support.',
+          true
+        );
+      }
+    } catch (err) {
+      setLoading(false);
+      showMessage(err?.message || 'Network error. Try again or contact support.', true);
+    }
   };
 
   return (
