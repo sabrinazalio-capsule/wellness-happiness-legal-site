@@ -1,0 +1,250 @@
+/* Happiness To Go – Styles for legal pages (Vite) */
+/* Colors and typography from lib/theme.ts */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --primary: #6B8E76;
+  --primary-light: #8FB09A;
+  --primary-dark: #4A6B54;
+  --logo-green: #4A6741;
+  --background: #F7E7E8;
+  --background-dark: #EDD8DA;
+  --surface: #FFFFFF;
+  --surface-elevated: #FAFAFA;
+  --text: #2D3436;
+  --text-secondary: #636E72;
+  --text-light: #B2BEC3;
+  --text-on-primary: #FFFFFF;
+  --border: #DFE6E9;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+header {
+  background: var(--surface);
+  padding: 24px 20px;
+  box-shadow: 0 1px 3px var(--shadow);
+  margin-bottom: 24px;
+}
+
+header .container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--logo-green);
+  margin: 0 0 4px 0;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 400;
+}
+
+.updated {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  margin: 8px 0 0 0;
+}
+
+main {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--logo-green);
+  margin: 24px 0 12px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+h2:first-child {
+  margin-top: 0;
+}
+
+p {
+  margin: 0 0 12px 0;
+}
+
+ul, ol {
+  margin: 0 0 12px 0;
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+nav.links {
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--surface-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+nav.links a {
+  display: inline-block;
+  margin-right: 16px;
+  font-weight: 600;
+}
+
+footer {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Data deletion form */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-group .hint {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.checkbox-group {
+  margin: 20px 0;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-on-primary);
+  background: var(--primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.legal-note {
+  margin: 24px 0;
+  padding: 16px;
+  background: var(--surface-elevated);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9375rem;
+}
+
+/* Form feedback */
+.form-message {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+.form-message[hidden] {
+  display: none;
+}
+
+.form-message-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
